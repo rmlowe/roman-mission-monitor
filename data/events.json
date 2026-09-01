@@ -48,30 +48,18 @@
     "milestone": "coronagraph_power_on",
     "status": "complete",
     "occurredAt": "2026-09-01T12:22:00Z",
-    "publishedAt": "2026-09-01T16:00:00Z",
+    "publishedAt": "2026-09-01T13:06:13.000Z",
     "title": "Coronagraph Instrument powered on",
     "summary": "NASA reports that Roman’s Coronagraph Instrument has been successfully activated and will now undergo calibrations and tests.",
-    "source": "https://science.nasa.gov/blogs/roman/",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/",
     "sourceType": "seed"
   },
   {
     "id": "rss:coronagraph_power_on:https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/",
     "milestone": "coronagraph_power_on",
     "status": "complete",
-    "occurredAt": "2026-09-01T13:06:13.000Z",
     "publishedAt": "2026-09-01T13:06:13.000Z",
     "title": "Coronagraph Instrument powered on",
-    "summary": "NASA Roman’s Planet Imager Has Powered On",
-    "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/",
-    "sourceType": "nasa-roman-rss"
-  },
-  {
-    "id": "rss:science:https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/",
-    "milestone": "science",
-    "status": "complete",
-    "occurredAt": "2026-09-01T13:06:13.000Z",
-    "publishedAt": "2026-09-01T13:06:13.000Z",
-    "title": "First-look observations / science operations",
     "summary": "NASA Roman’s Planet Imager Has Powered On",
     "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/",
     "sourceType": "nasa-roman-rss"
@@ -80,7 +68,6 @@
     "id": "rss:hga_deploy:https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
     "milestone": "hga_deploy",
     "status": "complete",
-    "occurredAt": "2026-09-01T12:59:35.000Z",
     "publishedAt": "2026-09-01T12:59:35.000Z",
     "title": "High-gain antenna deployed",
     "summary": "NASA Roman Space Telescope’s Antenna, ‘Visor’ Deployed",
@@ -91,55 +78,10 @@
     "id": "rss:aperture_cover_deploy:https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
     "milestone": "aperture_cover_deploy",
     "status": "complete",
-    "occurredAt": "2026-09-01T12:59:35.000Z",
     "publishedAt": "2026-09-01T12:59:35.000Z",
     "title": "Deployable aperture cover deployed",
     "summary": "NASA Roman Space Telescope’s Antenna, ‘Visor’ Deployed",
     "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
-    "sourceType": "nasa-roman-rss"
-  },
-  {
-    "id": "rss:coronagraph_power_on:https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
-    "milestone": "coronagraph_power_on",
-    "status": "complete",
-    "occurredAt": "2026-09-01T12:59:35.000Z",
-    "publishedAt": "2026-09-01T12:59:35.000Z",
-    "title": "Coronagraph Instrument powered on",
-    "summary": "NASA Roman Space Telescope’s Antenna, ‘Visor’ Deployed",
-    "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
-    "sourceType": "nasa-roman-rss"
-  },
-  {
-    "id": "rss:wfi_power_on:https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
-    "milestone": "wfi_power_on",
-    "status": "complete",
-    "occurredAt": "2026-09-01T12:59:35.000Z",
-    "publishedAt": "2026-09-01T12:59:35.000Z",
-    "title": "Wide Field Instrument powered on",
-    "summary": "NASA Roman Space Telescope’s Antenna, ‘Visor’ Deployed",
-    "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
-    "sourceType": "nasa-roman-rss"
-  },
-  {
-    "id": "rss:science:https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
-    "milestone": "science",
-    "status": "complete",
-    "occurredAt": "2026-09-01T12:59:35.000Z",
-    "publishedAt": "2026-09-01T12:59:35.000Z",
-    "title": "First-look observations / science operations",
-    "summary": "NASA Roman Space Telescope’s Antenna, ‘Visor’ Deployed",
-    "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
-    "sourceType": "nasa-roman-rss"
-  },
-  {
-    "id": "rss:science:https://science.nasa.gov/blogs/roman/2026/08/30/nasas-roman-space-telescope-flying-on-its-own/",
-    "milestone": "science",
-    "status": "complete",
-    "occurredAt": "2026-08-30T11:58:55.000Z",
-    "publishedAt": "2026-08-30T11:58:55.000Z",
-    "title": "First-look observations / science operations",
-    "summary": "NASA’s Roman Space Telescope Flying on Its Own",
-    "source": "https://science.nasa.gov/blogs/roman/2026/08/30/nasas-roman-space-telescope-flying-on-its-own/",
     "sourceType": "nasa-roman-rss"
   }
 ]
