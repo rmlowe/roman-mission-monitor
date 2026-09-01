@@ -33,6 +33,10 @@ function statusLabel(status: string) {
       return 'Upcoming'
     case 'conditional':
       return 'If needed'
+    case 'not_required':
+      return 'Not required'
+    case 'awaiting_confirmation':
+      return 'Awaiting confirmation'
     default:
       return 'Planned'
   }
