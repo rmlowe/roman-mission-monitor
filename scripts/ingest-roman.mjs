@@ -50,49 +50,57 @@ const recognizers = [
   {
     milestone: 'hga_deploy',
     status: 'complete',
-    matches: (text) => /high[- ]gain antenna/i.test(text) && /(successfully )?deploy(ed|ment)/i.test(text),
+    matches: (text) =>
+      /(high[- ]gain antenna.{0,160}(has |have )?(successfully )?deployed|antenna deployment.{0,160}(concluded|completed))/i.test(text),
     title: 'High-gain antenna deployed',
   },
   {
     milestone: 'aperture_cover_deploy',
     status: 'complete',
-    matches: (text) => /(deployable aperture cover|visor-like sunshade|aperture cover)/i.test(text) && /(successfully )?(deploy(ed|ment)|completed)/i.test(text),
+    matches: (text) =>
+      /(deployable aperture cover.{0,180}(successfully completed|was successfully deployed|has successfully deployed|deployment.{0,50}completed)|aperture cover.{0,180}(successfully completed|deployment.{0,50}completed))/i.test(text),
     title: 'Deployable aperture cover deployed',
   },
   {
     milestone: 'coronagraph_power_on',
     status: 'complete',
-    matches: (text) => /coronagraph instrument/i.test(text) && /(successfully activated|powered on|power on)/i.test(text),
+    matches: (text) =>
+      /(coronagraph instrument.{0,140}(has been successfully activated|has successfully powered on|has powered on|was successfully activated)|has successfully activated.{0,100}coronagraph instrument)/i.test(text),
     title: 'Coronagraph Instrument powered on',
   },
   {
     milestone: 'wfi_power_on',
     status: 'complete',
-    matches: (text) => /(wide field instrument|\bWFI\b)/i.test(text) && /(successfully activated|powered on|power on)/i.test(text),
+    matches: (text) =>
+      /((wide field instrument|\bWFI\b).{0,140}(has been successfully activated|has successfully powered on|has powered on|was successfully activated)|has successfully activated.{0,100}(wide field instrument|\bWFI\b))/i.test(text),
     title: 'Wide Field Instrument powered on',
   },
   {
     milestone: 'mcc2',
     status: 'not_required',
-    matches: (text) => /(second|#2).{0,40}mid-course correction/i.test(text) && /(not required|not needed|unnecessary)/i.test(text),
+    matches: (text) =>
+      /(second|#2).{0,50}mid-course correction.{0,180}(not required|not needed|unnecessary)/i.test(text),
     title: 'Second mid-course correction not required',
   },
   {
     milestone: 'mcc2',
     status: 'complete',
-    matches: (text) => /(second|#2).{0,40}mid-course correction/i.test(text) && /(completed|complete|burn)/i.test(text),
+    matches: (text) =>
+      /(second|#2).{0,50}mid-course correction.{0,180}(was successfully completed|has been completed|completed successfully|burn.{0,40}(completed|concluded))/i.test(text),
     title: 'Second mid-course correction complete',
   },
   {
     milestone: 'l2',
     status: 'complete',
-    matches: (text) => /(L2|second Lagrange point)/i.test(text) && /(orbit insertion|entered|arrived|insertion burn)/i.test(text) && /(complete|completed|success)/i.test(text),
+    matches: (text) =>
+      /(orbit insertion.{0,120}(completed|successful)|entered.{0,80}(L2|second Lagrange point)|arrived at.{0,40}L2)/i.test(text),
     title: 'L2 orbit insertion complete',
   },
   {
     milestone: 'science',
     status: 'complete',
-    matches: (text) => /(first[- ]look|first images|science operations)/i.test(text) && /(released|began|begin|started|start)/i.test(text),
+    matches: (text) =>
+      /(first[- ]look (images|observations).{0,100}(have been |were )?released|first images.{0,100}(have been |were )released|science operations.{0,100}(have begun|began|have started|started|are underway))/i.test(text),
     title: 'First-look observations / science operations',
   },
 ]
@@ -105,7 +113,6 @@ function recognize(item) {
       id: `rss:${rule.milestone}:${item.url}`,
       milestone: rule.milestone,
       status: rule.status,
-      occurredAt: item.publishedAt,
       publishedAt: item.publishedAt,
       title: rule.title,
       summary: item.title,
@@ -114,10 +121,20 @@ function recognize(item) {
     }))
 }
 
-function latestEvent(events, milestone) {
-  return events
-    .filter((event) => event.milestone === milestone)
-    .sort((a, b) => new Date(b.occurredAt ?? b.publishedAt ?? 0) - new Date(a.occurredAt ?? a.publishedAt ?? 0))[0]
+function eventsFor(events, milestone) {
+  return events.filter((event) => event.milestone === milestone)
+}
+
+function latestStateEvent(events, milestone) {
+  return eventsFor(events, milestone).sort(
+    (a, b) => new Date(b.publishedAt ?? b.occurredAt ?? 0) - new Date(a.publishedAt ?? a.occurredAt ?? 0),
+  )[0]
+}
+
+function latestActualEvent(events, milestone) {
+  return eventsFor(events, milestone)
+    .filter((event) => event.occurredAt)
+    .sort((a, b) => new Date(b.occurredAt) - new Date(a.occurredAt))[0]
 }
 
 const mission = await readJson('data/mission.json')
@@ -148,25 +165,26 @@ sourceState.romanBlog.lastSeenItemUrl = items[0].url
 
 const now = Date.now()
 const renderedMilestones = milestones.map((milestone) => {
-  const event = latestEvent(events, milestone.id)
-  let status = event?.status ?? milestone.defaultStatus
-  if (!event && milestone.staleAfter && now > new Date(milestone.staleAfter).getTime()) {
+  const stateEvent = latestStateEvent(events, milestone.id)
+  const actualEvent = latestActualEvent(events, milestone.id)
+  let status = stateEvent?.status ?? milestone.defaultStatus
+  if (!stateEvent && milestone.staleAfter && now > new Date(milestone.staleAfter).getTime()) {
     status = 'awaiting_confirmation'
   }
   return {
     id: milestone.id,
     title: milestone.title,
     timing: milestone.timing,
-    actualAt: event?.occurredAt ?? milestone.actualAt,
+    actualAt: actualEvent?.occurredAt ?? milestone.actualAt,
     status,
     description: milestone.description,
-    source: event?.source ?? milestone.source,
+    source: stateEvent?.source ?? milestone.source,
     ...(milestone.staleAfter ? { staleAfter: milestone.staleAfter } : {}),
   }
 })
 
 const latest = [...events].sort(
-  (a, b) => new Date(b.occurredAt ?? b.publishedAt ?? 0) - new Date(a.occurredAt ?? a.publishedAt ?? 0),
+  (a, b) => new Date(b.publishedAt ?? b.occurredAt ?? 0) - new Date(a.publishedAt ?? a.occurredAt ?? 0),
 )[0]
 
 await writeJson('data/events.json', events)
