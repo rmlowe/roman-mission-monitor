@@ -1,6 +1,8 @@
 name: Update Roman mission status
 
 on:
+  push:
+    branches: [main]
   schedule:
     - cron: '17 * * * *'
   workflow_dispatch:
