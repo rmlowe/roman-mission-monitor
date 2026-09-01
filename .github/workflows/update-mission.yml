@@ -1,0 +1,70 @@
+name: Update Roman mission status
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: roman-status-update
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Ingest official Roman updates
+        run: node scripts/ingest-roman.mjs
+
+      - name: Detect generated changes
+        id: changes
+        shell: bash
+        run: |
+          if git diff --quiet -- data/events.json data/source-state.json src/generated/mission-status.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit mission status
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/events.json data/source-state.json src/generated/mission-status.json
+          git commit -m "Update Roman mission status"
+          git push
+
+      - name: Build
+        if: steps.changes.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Configure Pages
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/deploy-pages@v4

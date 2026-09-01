@@ -1,0 +1,11 @@
+{
+  "name": "Nancy Grace Roman Space Telescope",
+  "shortName": "Roman",
+  "launchTime": "2026-08-30T11:26:00Z",
+  "destination": "Sun–Earth L2",
+  "journeyDistanceMiles": 1000000,
+  "orbitalInsertionTiming": "~100 days after launch",
+  "nasaMissionPage": "https://science.nasa.gov/mission/roman-space-telescope/",
+  "commissioningPage": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/",
+  "blogFeed": "https://science.nasa.gov/blogs/roman/feed/"
+}

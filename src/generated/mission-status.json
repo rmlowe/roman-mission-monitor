@@ -1,0 +1,100 @@
+{
+  "mission": {
+    "phase": "Commissioning",
+    "latestHeadline": "Coronagraph Instrument powered on",
+    "latestSummary": "NASA reports that Roman’s Coronagraph Instrument has been successfully activated and will now undergo calibrations and tests.",
+    "latestSource": "https://science.nasa.gov/blogs/roman/"
+  },
+  "milestones": [
+    {
+      "id": "launch",
+      "title": "Launch",
+      "timing": "30 Aug 2026",
+      "actualAt": "2026-08-30T11:26:00Z",
+      "status": "complete",
+      "description": "Lifted off on a SpaceX Falcon Heavy from Launch Complex 39A.",
+      "source": "https://science.nasa.gov/blogs/roman/2026/08/30/nasas-roman-space-telescope-launches/"
+    },
+    {
+      "id": "mcc1",
+      "title": "Mid-course correction #1",
+      "timing": "31 Aug 2026",
+      "actualAt": "2026-08-31T16:02:00Z",
+      "status": "complete",
+      "description": "Approximately three-minute burn to refine Roman’s trajectory toward L2.",
+      "source": "https://science.nasa.gov/blogs/roman/2026/08/31/nasas-roman-completes-first-mid-course-correction-burn/"
+    },
+    {
+      "id": "hga_deploy",
+      "title": "High-gain antenna deployment",
+      "timing": "31 Aug 2026",
+      "actualAt": "2026-08-31T18:03:00Z",
+      "status": "complete",
+      "description": "Roman’s 5.6-foot high-gain antenna deployed successfully.",
+      "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/"
+    },
+    {
+      "id": "aperture_cover_deploy",
+      "title": "Deployable aperture cover",
+      "timing": "1 Sep 2026",
+      "actualAt": "2026-09-01T10:05:00Z",
+      "status": "complete",
+      "description": "The visor-like deployable aperture cover deployed successfully.",
+      "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/"
+    },
+    {
+      "id": "coronagraph_power_on",
+      "title": "Coronagraph Instrument power-on",
+      "timing": "1 Sep 2026",
+      "actualAt": "2026-09-01T12:22:00Z",
+      "status": "complete",
+      "description": "Roman’s technology-demonstration Coronagraph Instrument was successfully activated.",
+      "source": "https://science.nasa.gov/blogs/roman/"
+    },
+    {
+      "id": "mcc2",
+      "title": "Mid-course correction #2",
+      "timing": "Later this week, if needed",
+      "status": "conditional",
+      "description": "Second planned trajectory correction; NASA says it will be performed if needed.",
+      "source": "https://science.nasa.gov/blogs/roman/2026/08/31/nasas-roman-completes-first-mid-course-correction-burn/",
+      "staleAfter": "2026-09-07T23:59:59Z"
+    },
+    {
+      "id": "wfi_power_on",
+      "title": "Wide Field Instrument power-on",
+      "timing": "~3 weeks after launch",
+      "status": "planned",
+      "description": "Roman’s primary science instrument enters its commissioning sequence.",
+      "source": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/",
+      "staleAfter": "2026-09-24T11:26:00Z"
+    },
+    {
+      "id": "alignment",
+      "title": "Alignment & focus",
+      "timing": "~2 months after launch",
+      "status": "planned",
+      "description": "Optical alignment, focusing, calibration, and observatory checkout continue.",
+      "source": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/",
+      "staleAfter": "2026-11-12T11:26:00Z"
+    },
+    {
+      "id": "l2",
+      "title": "L2 orbit insertion",
+      "timing": "~100 days after launch",
+      "status": "planned",
+      "description": "Roman enters its operational orbit around the Sun–Earth L2 region.",
+      "source": "https://science.nasa.gov/blogs/roman/2026/08/31/nasas-roman-completes-first-mid-course-correction-burn/",
+      "staleAfter": "2026-12-15T11:26:00Z"
+    },
+    {
+      "id": "science",
+      "title": "First-look observations & science operations",
+      "timing": "After commissioning",
+      "status": "planned",
+      "description": "The mission transitions from checkout into its science programme.",
+      "source": "https://science.nasa.gov/mission/roman-space-telescope/",
+      "staleAfter": "2027-01-31T23:59:59Z"
+    }
+  ]
+}

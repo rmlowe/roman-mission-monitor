@@ -1,0 +1,57 @@
+[
+  {
+    "id": "launch",
+    "milestone": "launch",
+    "status": "complete",
+    "occurredAt": "2026-08-30T11:26:00Z",
+    "publishedAt": "2026-08-30T11:26:00Z",
+    "title": "Roman launched",
+    "summary": "Roman lifted off aboard a SpaceX Falcon Heavy.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/08/30/nasas-roman-space-telescope-launches/",
+    "sourceType": "seed"
+  },
+  {
+    "id": "mcc1",
+    "milestone": "mcc1",
+    "status": "complete",
+    "occurredAt": "2026-08-31T16:02:00Z",
+    "publishedAt": "2026-08-31T19:33:00Z",
+    "title": "First mid-course correction complete",
+    "summary": "Roman completed an approximately three-minute burn to refine its trajectory toward the Sun–Earth L2 region.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/08/31/nasas-roman-completes-first-mid-course-correction-burn/",
+    "sourceType": "seed"
+  },
+  {
+    "id": "hga",
+    "milestone": "hga_deploy",
+    "status": "complete",
+    "occurredAt": "2026-08-31T18:03:00Z",
+    "publishedAt": "2026-09-01T12:59:00Z",
+    "title": "High-gain antenna deployed",
+    "summary": "Roman’s high-gain antenna deployment completed successfully.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
+    "sourceType": "seed"
+  },
+  {
+    "id": "aperture",
+    "milestone": "aperture_cover_deploy",
+    "status": "complete",
+    "occurredAt": "2026-09-01T10:05:00Z",
+    "publishedAt": "2026-09-01T12:59:00Z",
+    "title": "Deployable aperture cover deployed",
+    "summary": "Roman’s visor-like deployable aperture cover completed its deployment successfully.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
+    "sourceType": "seed"
+  },
+  {
+    "id": "coronagraph",
+    "milestone": "coronagraph_power_on",
+    "status": "complete",
+    "occurredAt": "2026-09-01T12:22:00Z",
+    "publishedAt": "2026-09-01T16:00:00Z",
+    "title": "Coronagraph Instrument powered on",
+    "summary": "NASA reports that Roman’s Coronagraph Instrument has been successfully activated and will now undergo calibrations and tests.",
+    "source": "https://science.nasa.gov/blogs/roman/",
+    "sourceType": "seed"
+  }
+]
