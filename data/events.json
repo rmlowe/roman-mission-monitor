@@ -73,15 +73,5 @@
     "summary": "NASA Roman Space Telescope’s Antenna, ‘Visor’ Deployed",
     "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-roman-space-telescopes-antenna-visor-deployed/",
     "sourceType": "nasa-roman-rss"
-  },
-  {
-    "id": "rss:science:https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/",
-    "milestone": "science",
-    "status": "complete",
-    "publishedAt": "2026-09-01T13:06:13.000Z",
-    "title": "First-look observations / science operations",
-    "summary": "NASA Roman’s Planet Imager Has Powered On",
-    "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/",
-    "sourceType": "nasa-roman-rss"
   }
 ]

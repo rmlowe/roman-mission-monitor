@@ -91,9 +91,9 @@
       "id": "science",
       "title": "First-look observations & science operations",
       "timing": "After commissioning",
-      "status": "complete",
+      "status": "planned",
       "description": "The mission transitions from checkout into its science programme.",
-      "source": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/",
+      "source": "https://science.nasa.gov/mission/roman-space-telescope/",
       "staleAfter": "2027-01-31T23:59:59Z"
     }
   ]
