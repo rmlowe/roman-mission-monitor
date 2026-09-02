@@ -1,4 +1,4 @@
-name: Update Roman mission status
+name: Update and deploy Roman mission status
 
 on:
   push:
@@ -13,11 +13,11 @@ permissions:
   id-token: write
 
 concurrency:
-  group: roman-status-update
+  group: roman-site
   cancel-in-progress: true
 
 jobs:
-  update:
+  update-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -53,20 +53,30 @@ jobs:
           git commit -m "Update Roman mission status"
           git push
 
+      - name: Decide whether to deploy
+        id: deploy
+        shell: bash
+        run: |
+          if [[ "${{ steps.changes.outputs.changed }}" == "true" || "${{ github.event_name }}" != "schedule" ]]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Build
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.deploy.outputs.deploy == 'true'
         run: npm run build
 
       - name: Configure Pages
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.deploy.outputs.deploy == 'true'
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.deploy.outputs.deploy == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
       - name: Deploy to GitHub Pages
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.deploy.outputs.deploy == 'true'
         uses: actions/deploy-pages@v4
