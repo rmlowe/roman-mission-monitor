@@ -139,7 +139,7 @@ function latestActualEvent(events, milestone) {
 
 const mission = await readJson('data/mission.json')
 const milestones = await readJson('data/milestones.json')
-const events = await readJson('data/events.json')
+let events = await readJson('data/events.json')
 const sourceState = await readJson('data/source-state.json')
 
 const response = await fetch(mission.blogFeed, {
@@ -150,14 +150,30 @@ if (!response.ok) throw new Error(`Roman RSS fetch failed: ${response.status} ${
 const items = parseRss(await response.text())
 if (!items.length) throw new Error('Roman RSS feed contained no items')
 
+// Re-run the current recognizers against items that are still present in the RSS
+// feed. This lets us retract a machine-generated false positive after tightening a
+// rule, without deleting older valid events merely because they have aged out of
+// the feed window.
+const currentFeedUrls = new Set(items.map((item) => item.url))
+const recognizedEvents = items.flatMap(recognize)
+const recognizedIds = new Set(recognizedEvents.map((event) => event.id))
+const beforeReconcile = events.length
+events = events.filter(
+  (event) =>
+    event.sourceType !== 'nasa-roman-rss' ||
+    !currentFeedUrls.has(event.source) ||
+    recognizedIds.has(event.id),
+)
+if (events.length !== beforeReconcile) {
+  console.log(`Retracted ${beforeReconcile - events.length} invalid RSS-derived event(s)`)
+}
+
 const knownIds = new Set(events.map((event) => event.id))
-for (const item of items) {
-  for (const event of recognize(item)) {
-    if (!knownIds.has(event.id)) {
-      events.push(event)
-      knownIds.add(event.id)
-      console.log(`Detected: ${event.title} (${item.url})`)
-    }
+for (const event of recognizedEvents) {
+  if (!knownIds.has(event.id)) {
+    events.push(event)
+    knownIds.add(event.id)
+    console.log(`Detected: ${event.title} (${event.source})`)
   }
 }
 
