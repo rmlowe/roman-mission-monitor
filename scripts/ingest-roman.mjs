@@ -51,56 +51,56 @@ const recognizers = [
     milestone: 'hga_deploy',
     status: 'complete',
     matches: (text) =>
-      /(high[- ]gain antenna.{0,160}(has |have )?(successfully )?deployed|antenna deployment.{0,160}(concluded|completed))/i.test(text),
+      /(high[- ]gain antenna[^.!?]{0,160}(has |have )?(successfully )?deployed|antenna deployment[^.!?]{0,160}(concluded|completed))/i.test(text),
     title: 'High-gain antenna deployed',
   },
   {
     milestone: 'aperture_cover_deploy',
     status: 'complete',
     matches: (text) =>
-      /(deployable aperture cover.{0,180}(successfully completed|was successfully deployed|has successfully deployed|deployment.{0,50}completed)|aperture cover.{0,180}(successfully completed|deployment.{0,50}completed))/i.test(text),
+      /(deployable aperture cover[^.!?]{0,180}(successfully completed|was successfully deployed|has successfully deployed|deployment[^.!?]{0,50}completed)|aperture cover[^.!?]{0,180}(successfully completed|deployment[^.!?]{0,50}completed))/i.test(text),
     title: 'Deployable aperture cover deployed',
   },
   {
     milestone: 'coronagraph_power_on',
     status: 'complete',
     matches: (text) =>
-      /(coronagraph instrument.{0,140}(has been successfully activated|has successfully powered on|has powered on|was successfully activated)|has successfully activated.{0,100}coronagraph instrument)/i.test(text),
+      /(coronagraph instrument[^.!?]{0,140}(has been successfully activated|has successfully powered on|has powered on|was successfully activated)|has successfully activated[^.!?]{0,100}coronagraph instrument)/i.test(text),
     title: 'Coronagraph Instrument powered on',
   },
   {
     milestone: 'wfi_power_on',
     status: 'complete',
     matches: (text) =>
-      /((wide field instrument|\bWFI\b).{0,140}(has been successfully activated|has successfully powered on|has powered on|was successfully activated)|has successfully activated.{0,100}(wide field instrument|\bWFI\b))/i.test(text),
+      /((wide field instrument|\bWFI\b)[^.!?]{0,140}(has been successfully activated|has successfully powered on|has powered on|was successfully activated)|has successfully activated[^.!?]{0,100}(wide field instrument|\bWFI\b))/i.test(text),
     title: 'Wide Field Instrument powered on',
   },
   {
     milestone: 'mcc2',
     status: 'not_required',
     matches: (text) =>
-      /(second|#2).{0,50}mid-course correction.{0,180}(not required|not needed|unnecessary)/i.test(text),
+      /(second|#2)[^.!?]{0,50}mid-course correction[^.!?]{0,180}(not required|not needed|unnecessary)/i.test(text),
     title: 'Second mid-course correction not required',
   },
   {
     milestone: 'mcc2',
     status: 'complete',
     matches: (text) =>
-      /(second|#2).{0,50}mid-course correction.{0,180}(was successfully completed|has been completed|completed successfully|burn.{0,40}(completed|concluded))/i.test(text),
+      /(second|#2)[^.!?]{0,50}mid-course correction[^.!?]{0,180}(was successfully completed|has been completed|completed successfully|burn[^.!?]{0,40}(completed|concluded))/i.test(text),
     title: 'Second mid-course correction complete',
   },
   {
     milestone: 'l2',
     status: 'complete',
     matches: (text) =>
-      /(orbit insertion.{0,120}(completed|successful)|entered.{0,80}(L2|second Lagrange point)|arrived at.{0,40}L2)/i.test(text),
+      /(orbit insertion[^.!?]{0,120}(completed|successful)|entered[^.!?]{0,80}(L2|second Lagrange point)|arrived at[^.!?]{0,40}L2)/i.test(text),
     title: 'L2 orbit insertion complete',
   },
   {
     milestone: 'science',
     status: 'complete',
     matches: (text) =>
-      /(first[- ]look (images|observations).{0,100}(have been |were )?released|first images.{0,100}(have been |were )released|science operations.{0,100}(have begun|began|have started|started|are underway))/i.test(text),
+      /(first[- ]look (images|observations)[^.!?]{0,100}(have been |were )?released|first images[^.!?]{0,100}(have been |were )released|science operations[^.!?]{0,100}(have begun|began|have started|started|are underway))/i.test(text),
     title: 'First-look observations / science operations',
   },
 ]
