@@ -1,8 +1,17 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { parseCommissioningPage } from './parse-commissioning.mjs'
 
 const root = process.cwd()
 const readJson = async (file) => JSON.parse(await fs.readFile(path.join(root, file), 'utf8'))
+const readJsonIfPresent = async (file) => {
+  try {
+    return await readJson(file)
+  } catch (error) {
+    if (error?.code === 'ENOENT') return undefined
+    throw error
+  }
+}
 const writeJson = async (file, value) => {
   await fs.mkdir(path.dirname(path.join(root, file)), { recursive: true })
   await fs.writeFile(path.join(root, file), `${JSON.stringify(value, null, 2)}\n`)
@@ -142,13 +151,38 @@ const milestones = await readJson('data/milestones.json')
 let events = await readJson('data/events.json')
 const sourceState = await readJson('data/source-state.json')
 
-const response = await fetch(mission.blogFeed, {
-  headers: { 'user-agent': 'roman-mission-monitor/0.1 (+https://github.com/rmlowe/roman-mission-monitor)' },
-})
-if (!response.ok) throw new Error(`Roman RSS fetch failed: ${response.status} ${response.statusText}`)
+const requestHeaders = {
+  'user-agent': 'roman-mission-monitor/0.1 (+https://github.com/rmlowe/roman-mission-monitor)',
+}
+const [blogResponse, commissioningResponse] = await Promise.all([
+  fetch(mission.blogFeed, { headers: requestHeaders }),
+  fetch(mission.commissioningPage, { headers: requestHeaders }),
+])
 
-const items = parseRss(await response.text())
+if (!blogResponse.ok) throw new Error(`Roman RSS fetch failed: ${blogResponse.status} ${blogResponse.statusText}`)
+if (!commissioningResponse.ok) {
+  throw new Error(
+    `Roman commissioning fetch failed: ${commissioningResponse.status} ${commissioningResponse.statusText}`,
+  )
+}
+
+const items = parseRss(await blogResponse.text())
 if (!items.length) throw new Error('Roman RSS feed contained no items')
+
+const commissioningSnapshot = parseCommissioningPage(await commissioningResponse.text(), {
+  url: mission.commissioningPage,
+})
+const previousCommissioningSnapshot = await readJsonIfPresent('data/observations/commissioning.json')
+if (previousCommissioningSnapshot?.source?.contentHash !== commissioningSnapshot.source.contentHash) {
+  await writeJson('data/observations/commissioning.json', commissioningSnapshot)
+  console.log(`Commissioning page semantic content changed: ${commissioningSnapshot.source.contentHash}`)
+}
+sourceState.romanCommissioning = {
+  contentHash: commissioningSnapshot.source.contentHash,
+  ...(commissioningSnapshot.source.pageLastUpdated
+    ? { pageLastUpdated: commissioningSnapshot.source.pageLastUpdated }
+    : {}),
+}
 
 // Re-run the current recognizers against items that are still present in the RSS
 // feed. This lets us retract a machine-generated false positive after tightening a
