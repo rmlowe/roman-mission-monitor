@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "parserVersion": "commissioning-v1",
+  "parserVersion": "commissioning-v2",
   "source": {
     "id": "roman-commissioning",
     "url": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/",
-    "fetchedAt": "2026-09-04T06:02:26.659Z",
-    "contentHash": "sha256:f261361376d7152cf151d2368dd0fd0ee915804149d44e61c4a8a313f669d6fd",
+    "fetchedAt": "2026-09-04T22:04:51.292Z",
+    "contentHash": "sha256:12457bf468c9bb1f15be4bd3b023cb201b59950bb595a2d49d9d42fa19fafdbb",
     "pageLastUpdated": "2026-09-01"
   },
   "sections": [
@@ -22,7 +22,7 @@
     {
       "id": "romans-orbit",
       "heading": "Roman's Orbit",
-      "text": "This visualization shows the stable, halo orbit that Roman will have around L2. At this location, the gravity of the Sun and Earth, together with an object’s motion around the Sun, let it stay lined up with Earth as they orbit, allowing Roman to have a relatively steady orbit without using much fuel. This location also offers exceptionally stable optical performance and a constant, unobstructed view of a wide swath of the sky; Earth won’t block much of Roman’s view since it will be so distant. And at L2, heat from Earth, the Sun, and the Moon have less effect on infrared telescopes, which “see” heat. Unable to render the provided source"
+      "text": "This visualization shows the stable, halo orbit that Roman will have around L2. At this location, the gravity of the Sun and Earth, together with an object’s motion around the Sun, let it stay lined up with Earth as they orbit, allowing Roman to have a relatively steady orbit without using much fuel. This location also offers exceptionally stable optical performance and a constant, unobstructed view of a wide swath of the sky; Earth won’t block much of Roman’s view since it will be so distant. And at L2, heat from Earth, the Sun, and the Moon have less effect on infrared telescopes, which “see” heat."
     }
   ]
 }
