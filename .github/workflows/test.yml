@@ -1,0 +1,32 @@
+name: Test Roman mission monitor
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Parser regression tests
+        run: node --test test/*.test.mjs
+
+      - name: Live commissioning-page smoke check
+        run: node scripts/check-commissioning-live.mjs
+
+      - name: Build
+        run: npm run build
