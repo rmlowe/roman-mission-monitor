@@ -32,6 +32,16 @@ const sectionId = (heading) =>
     .replace(/^-|-$/g, '')
 
 const wantedSections = new Set(['where-is-roman', 'deployments', 'romans-orbit'])
+const fallbackNoisePatterns = [
+  /To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video/gi,
+  /Unable to render the provided source/gi,
+]
+
+const normalizeSectionText = (value) =>
+  fallbackNoisePatterns
+    .reduce((text, pattern) => text.replace(pattern, ' '), stripHtml(value))
+    .replace(/\s+/g, ' ')
+    .trim()
 
 function extractSections(html) {
   const headings = [...html.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)]
@@ -45,12 +55,7 @@ function extractSections(html) {
 
     const start = match.index + match[0].length
     const end = headings[index + 1]?.index ?? html.length
-    let text = stripHtml(html.slice(start, end))
-
-    text = text
-      .replace(/To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video/gi, ' ')
-      .replace(/\s+/g, ' ')
-      .trim()
+    const text = normalizeSectionText(html.slice(start, end))
 
     sections.push({ id, heading, text })
   }
@@ -89,7 +94,7 @@ export function parseCommissioningPage(html, { url, fetchedAt = new Date().toISO
 
   return {
     schemaVersion: 1,
-    parserVersion: 'commissioning-v1',
+    parserVersion: 'commissioning-v2',
     source: {
       id: 'roman-commissioning',
       url,

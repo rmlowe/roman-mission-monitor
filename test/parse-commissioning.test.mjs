@@ -15,7 +15,7 @@ test('extracts the expected semantic sections from the commissioning page', () =
   const snapshot = parseFixture()
 
   assert.equal(snapshot.schemaVersion, 1)
-  assert.equal(snapshot.parserVersion, 'commissioning-v1')
+  assert.equal(snapshot.parserVersion, 'commissioning-v2')
   assert.equal(snapshot.source.id, 'roman-commissioning')
   assert.equal(snapshot.source.url, sourceUrl)
   assert.equal(snapshot.source.pageLastUpdated, '2026-09-01')
@@ -34,6 +34,7 @@ test('extracts the expected semantic sections from the commissioning page', () =
   assert.match(snapshot.sections[1].text, /solar panels and sunshade deployed/)
   assert.match(snapshot.sections[2].text, /stable, halo orbit/)
   assert.ok(snapshot.sections.every(({ text }) => !text.includes('enable JavaScript')))
+  assert.ok(snapshot.sections.every(({ text }) => !text.includes('Unable to render the provided source')))
 })
 
 test('semantic hash ignores fetch time', () => {
