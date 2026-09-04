@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "test": "node --test test/*.test.mjs",
+    "check:commissioning": "node scripts/check-commissioning-live.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
