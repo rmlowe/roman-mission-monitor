@@ -1,5 +1,9 @@
 {
   "romanBlog": {
     "lastSeenItemUrl": "https://science.nasa.gov/blogs/roman/2026/09/01/nasa-romans-planet-imager-has-powered-on/"
+  },
+  "romanCommissioning": {
+    "contentHash": "sha256:f261361376d7152cf151d2368dd0fd0ee915804149d44e61c4a8a313f669d6fd",
+    "pageLastUpdated": "2026-09-01"
   }
 }
