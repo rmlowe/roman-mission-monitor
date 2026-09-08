@@ -55,7 +55,7 @@
       "id": "mcc2",
       "title": "Mid-course correction #2",
       "timing": "Later this week, if needed",
-      "status": "conditional",
+      "status": "awaiting_confirmation",
       "description": "Second planned trajectory correction; NASA says it will be performed if needed.",
       "source": "https://science.nasa.gov/blogs/roman/2026/08/31/nasas-roman-completes-first-mid-course-correction-burn/",
       "staleAfter": "2026-09-07T23:59:59Z"
