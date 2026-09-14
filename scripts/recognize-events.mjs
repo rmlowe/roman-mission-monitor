@@ -1,3 +1,5 @@
+// Science confirmations must start with a direct assertion or an explicitly
+// affirmative NASA attribution. Do not match embedded claims or generic schedules.
 const recognizers = [
   {
     milestone: 'hga_deploy',
@@ -52,25 +54,26 @@ const recognizers = [
     milestone: 'first_look',
     status: 'complete',
     matches: (text) =>
-      /\bfirst(?:[- ]look)? (?:images|observations) (?:have been |were |are |successfully )?(?:released|published)\b/i.test(text),
+      /^(?:NASA (?:has )?(?:confirmed|reported|announced) (?:that )?)?(?:Roman['’]s )?first(?:[- ]look)? (?:images|observations) (?:have been|were) (?:successfully )?(?:released|published)\b/i.test(text),
     title: 'First-look images released',
   },
   {
     milestone: 'science',
     status: 'complete',
     matches: (text) =>
-      /\bscience operations (?:have (?:begun|started)|began|started|are underway)\b/i.test(text),
+      /^(?:NASA (?:has )?(?:confirmed|reported|announced) (?:that )?)?(?:Roman['’]s )?science operations (?:have (?:begun|started)|began|started|are underway)\b/i.test(text),
     title: 'Science operations begun',
   },
 ]
 
 // Prefer a missed automatic update over interpreting a plan or denial as evidence.
 // Evaluate sentences independently, and never join a headline to article text.
-const uncertain = /\b(?:will|would|could|should|may|might|must|not|never|no|cannot|can['’]t|hasn['’]t|haven['’]t|hadn['’]t|isn['’]t|wasn['’]t|weren['’]t|didn['’]t|won['’]t|if|unless|expected|planned|scheduled|anticipated|aims?|hopes?|before|until|whether)\b/i
+const uncertain = /\b(?:will|would|could|should|may|might|must|not|never|no|cannot|can['’]t|hasn['’]t|haven['’]t|hadn['’]t|isn['’]t|wasn['’]t|weren['’]t|didn['’]t|won['’]t|if|unless|expected|planned|scheduled|anticipated|aims?|hopes?|before|until|whether|denied|denies|deny|denial|refuted|disputed|unconfirmed|rumou?rs?|false|incorrect)\b/i
 
 export function recognize(item) {
   const sentences = [item.title, item.text].flatMap(value =>
-    (value ?? '').split(/[.!?;\n]+/).map(sentence => sentence.trim()).filter(Boolean),
+    ((value ?? '').match(/[^.!?;\n]+[.!?;\n]?/g) ?? [])
+      .map(sentence => sentence.trim()).filter(sentence => sentence && !sentence.endsWith('?')),
   )
   return recognizers
     .filter((rule) => sentences.some(sentence => {
@@ -89,13 +92,13 @@ export function recognize(item) {
       summary: item.title,
       source: item.url,
       sourceType: 'nasa-roman-rss',
-      recognizerVersion: 2,
+      recognizerVersion: 3,
     }))
 }
 
-// Old RSS science events may mean only first-image release. Preserve seed events
-// and recognitions produced with the separated milestone rules.
+// Older RSS science/image events may conflate milestones or accept non-assertions.
+// Preserve seed events and recognitions produced with affirmative assertion rules.
 export function discardLegacyScienceEvents(events) {
   return events.filter(event => !(event.sourceType === 'nasa-roman-rss' &&
-    event.milestone === 'science' && event.recognizerVersion !== 2))
+    ['science', 'first_look'].includes(event.milestone) && event.recognizerVersion !== 3))
 }

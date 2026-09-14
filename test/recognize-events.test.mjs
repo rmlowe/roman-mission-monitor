@@ -5,6 +5,13 @@ import { recognize, discardLegacyScienceEvents } from '../scripts/recognize-even
 const detect = (text, title = '') => recognize({ title, text, url: 'https://example.test/update', publishedAt: '2026-09-14T00:00:00Z' })
 
 for (const text of [
+  'NASA denied science operations have begun.',
+  'First-look images are released after commissioning.',
+  'Reports suggest science operations have begun.',
+  'NASA denied that the high-gain antenna has deployed.',
+  'Science operations have begun?',
+  'First-look images were released?',
+  'The claim that science operations have begun is false.',
   'First-look images will be released after commissioning.',
   'First-look images have not been released.',
   'First-look images were never released.',
@@ -21,6 +28,8 @@ for (const text of [
 for (const [text, milestone, status = 'complete'] of [
   ['First-look images have been released.', 'first_look'],
   ['First images were released.', 'first_look'],
+  ["NASA confirmed that Roman’s first-look images have been released.", 'first_look'],
+  ['NASA has announced that science operations have begun.', 'science'],
   ['Science operations have begun.', 'science'],
   ['Science operations are underway.', 'science'],
   ['The high-gain antenna has successfully deployed.', 'hga_deploy'],
@@ -44,13 +53,15 @@ test('repeated confirmation produces one event with source evidence', () => {
   assert.equal(events.length, 1)
   assert.equal(events[0].source, 'https://example.test/update')
   assert.equal(events[0].publishedAt, '2026-09-14T00:00:00Z')
-  assert.equal(events[0].recognizerVersion, 2)
+  assert.equal(events[0].recognizerVersion, 3)
 })
 
 test('retracts ambiguous legacy science events, including those outside the feed', () => {
   const legacy = { milestone: 'science', sourceType: 'nasa-roman-rss', source: 'old-feed-item' }
-  const confirmed = { ...legacy, recognizerVersion: 2 }
+  const previousScience = { ...legacy, recognizerVersion: 2 }
+  const previousImages = { ...previousScience, milestone: 'first_look' }
+  const confirmed = { ...legacy, recognizerVersion: 3 }
   const seed = { ...legacy, sourceType: 'seed' }
   const other = { ...legacy, milestone: 'hga_deploy' }
-  assert.deepEqual(discardLegacyScienceEvents([legacy, confirmed, seed, other]), [confirmed, seed, other])
+  assert.deepEqual(discardLegacyScienceEvents([legacy, previousScience, previousImages, confirmed, seed, other]), [confirmed, seed, other])
 })
