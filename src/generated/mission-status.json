@@ -88,11 +88,19 @@
       "staleAfter": "2026-12-15T11:26:00Z"
     },
     {
+      "id": "first_look",
+      "title": "First-look images",
+      "timing": "Awaiting NASA announcement",
+      "status": "planned",
+      "description": "Release of Roman’s first-look images or observations.",
+      "source": "https://science.nasa.gov/mission/roman-space-telescope/"
+    },
+    {
       "id": "science",
-      "title": "First-look observations & science operations",
+      "title": "Science operations",
       "timing": "After commissioning",
       "status": "planned",
-      "description": "The mission transitions from checkout into its science programme.",
+      "description": "The mission begins its science operations after commissioning.",
       "source": "https://science.nasa.gov/mission/roman-space-telescope/",
       "staleAfter": "2027-01-31T23:59:59Z"
     }

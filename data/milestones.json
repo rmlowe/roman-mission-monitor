@@ -81,12 +81,20 @@
     "source": "https://science.nasa.gov/blogs/roman/2026/08/31/nasas-roman-completes-first-mid-course-correction-burn/"
   },
   {
+    "id": "first_look",
+    "title": "First-look images",
+    "timing": "Awaiting NASA announcement",
+    "defaultStatus": "planned",
+    "description": "Release of Roman’s first-look images or observations.",
+    "source": "https://science.nasa.gov/mission/roman-space-telescope/"
+  },
+  {
     "id": "science",
-    "title": "First-look observations & science operations",
+    "title": "Science operations",
     "timing": "After commissioning",
     "defaultStatus": "planned",
     "staleAfter": "2027-01-31T23:59:59Z",
-    "description": "The mission transitions from checkout into its science programme.",
+    "description": "The mission begins its science operations after commissioning.",
     "source": "https://science.nasa.gov/mission/roman-space-telescope/"
   }
 ]
