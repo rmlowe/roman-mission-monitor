@@ -4,15 +4,15 @@
   "source": {
     "id": "roman-commissioning",
     "url": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/",
-    "fetchedAt": "2026-09-16T12:38:40.860Z",
-    "contentHash": "sha256:02c5907f168fb48731e2f5467232288f4f3f6edd6b5eeee37ba767eeea7f1cfe",
-    "pageLastUpdated": "2026-09-16"
+    "fetchedAt": "2026-09-17T12:38:33.729Z",
+    "contentHash": "sha256:fba9c69be558524b4a135744e6e2745fe07bef5ee26991699db9d30966a9bb6c",
+    "pageLastUpdated": "2026-09-17"
   },
   "sections": [
     {
       "id": "where-is-roman",
       "heading": "Where is Roman?",
-      "text": "Roman is making its three-month journey from Earth to Sun-Earth Lagrange Point 2, or L2. Along the way, Roman is undergoing a process called commissioning, where systems are turned on, adjusted, calibrated, and prepared for science operations. Commissioning is the time for scientists and engineers to make sure that Roman is performing as expected. The schedule is subject to change as the team assesses and adjusts as needed. Visit the Roman Blog Watch animation of Roman's progression to L2"
+      "text": "Roman is making its three-month journey from Earth to Sun-Earth Lagrange Point 2, or L2. Along the way, Roman is undergoing a process called commissioning, where systems are turned on, adjusted, calibrated, and prepared for science operations. Commissioning is the time for scientists and engineers to make sure that Roman is performing as expected. The schedule is subject to change as the team assesses and adjusts as needed. Visit the Roman Blog"
     },
     {
       "id": "deployments",
