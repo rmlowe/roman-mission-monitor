@@ -64,7 +64,7 @@
       "id": "wfi_power_on",
       "title": "Wide Field Instrument power-on",
       "timing": "~3 weeks after launch",
-      "status": "planned",
+      "status": "awaiting_confirmation",
       "description": "Roman’s primary science instrument enters its commissioning sequence.",
       "source": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/",
       "staleAfter": "2026-09-24T11:26:00Z"
