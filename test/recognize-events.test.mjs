@@ -27,7 +27,7 @@ for (const text of [
 
 for (const [text, milestone, status = 'complete'] of [
   ['First-look images have been released.', 'first_look'],
-  ['First images were released.', 'first_look'],
+  ['First science images were released.', 'first_look'],
   ["NASA confirmed that Roman’s first-look images have been released.", 'first_look'],
   ['NASA has announced that science operations have begun.', 'science'],
   ['Science operations have begun.', 'science'],
@@ -53,7 +53,7 @@ test('repeated confirmation produces one event with source evidence', () => {
   assert.equal(events.length, 1)
   assert.equal(events[0].source, 'https://example.test/update')
   assert.equal(events[0].publishedAt, '2026-09-14T00:00:00Z')
-  assert.equal(events[0].recognizerVersion, 3)
+  assert.equal(events[0].recognizerVersion, 4)
 })
 
 test('retracts ambiguous legacy science events, including those outside the feed', () => {
@@ -61,7 +61,30 @@ test('retracts ambiguous legacy science events, including those outside the feed
   const previousScience = { ...legacy, recognizerVersion: 2 }
   const previousImages = { ...previousScience, milestone: 'first_look' }
   const confirmed = { ...legacy, recognizerVersion: 3 }
+  const oldImages = { ...legacy, milestone: 'first_look', recognizerVersion: 3 }
+  const confirmedImages = { ...oldImages, recognizerVersion: 4 }
   const seed = { ...legacy, sourceType: 'seed' }
   const other = { ...legacy, milestone: 'hga_deploy' }
-  assert.deepEqual(discardLegacyScienceEvents([legacy, previousScience, previousImages, confirmed, seed, other]), [confirmed, seed, other])
+  assert.deepEqual(discardLegacyScienceEvents([legacy, previousScience, previousImages, confirmed, oldImages, confirmedImages, seed, other]), [confirmed, confirmedImages, seed, other])
 })
+
+const wfiConfirmation = 'NASA’s Nancy Grace Roman Space Telescope team has successfully activated the Wide Field Instrument, a 300-megapixel infrared camera that will allow scientists to explore wide swaths of the cosmos very quickly without sacrificing exquisite detail.'
+
+test('recognises NASA WFI activation despite future capability in relative clause', () => {
+  const events = detect(wfiConfirmation, 'NASA Activates Roman’s Primary Instrument, Checks Out Coronagraph')
+  assert.deepEqual(events.map(e => e.milestone), ['wfi_power_on'])
+  assert.equal(events[0].occurredAt, undefined, 'publication is not an occurrence timestamp')
+})
+
+for (const text of [
+  'First images were released.',
+  'The first engineering test images were released.',
+  'First science images will be released by early 2027.',
+  'First science images have not been released.',
+  'If ' + wfiConfirmation,
+  'NASA denied that ' + wfiConfirmation,
+  wfiConfirmation.replace('has successfully activated', 'will activate'),
+  wfiConfirmation.replace('has successfully activated', 'has not successfully activated'),
+  wfiConfirmation.replace('detail.', 'detail, but this claim is false.'),
+  wfiConfirmation.replace('detail.', 'detail, if activation succeeds.'),
+]) test(`does not broaden confirmation: ${text}`, () => assert.deepEqual(detect(text), []))

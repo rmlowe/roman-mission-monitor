@@ -42,6 +42,12 @@ function statusLabel(status: string) {
   }
 }
 
+function publicationDate(value?: string) {
+  return value ? new Date(value).toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC',
+  }) : 'Date unavailable'
+}
+
 export default function App() {
   const elapsed = useMissionElapsed()
 
@@ -78,8 +84,9 @@ export default function App() {
         </article>
 
         <article className="status-card">
-          <span className="label">Latest confirmed event</span>
+          <span className="label">Latest confirmed milestone</span>
           <strong>{mission.latestHeadline}</strong>
+          <span className="subtle">Reported {publicationDate(mission.latestPublishedAt)}</span>
           <a href={mission.latestSource} target="_blank" rel="noreferrer">NASA update ↗</a>
         </article>
       </section>
@@ -135,8 +142,9 @@ export default function App() {
 
         <aside className="latest-panel">
           <p className="eyebrow">Latest official update</p>
-          <h2>{mission.latestHeadline}</h2>
-          <p>{mission.latestSummary}</p>
+          <h2>{mission.latestArticle.title}</h2>
+          <p className="subtle">Published {publicationDate(mission.latestArticle.publishedAt)}</p>
+          <p>{mission.latestArticle.summary}</p>
           <dl>
             <div>
               <dt>Launch</dt>
@@ -151,7 +159,7 @@ export default function App() {
               <dd>{mission.orbitalInsertionTiming}</dd>
             </div>
           </dl>
-          <a className="button-link" href={mission.latestSource} target="_blank" rel="noreferrer">
+          <a className="button-link" href={mission.latestArticle.source} target="_blank" rel="noreferrer">
             Read NASA update ↗
           </a>
         </aside>
