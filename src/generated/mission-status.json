@@ -6,10 +6,10 @@
     "latestSource": "https://science.nasa.gov/blogs/roman/2026/09/15/nasa-activates-romans-primary-instrument-checks-out-coronagraph/",
     "latestPublishedAt": "2026-09-15T17:59:02.000Z",
     "latestArticle": {
-      "title": "NASA’s Roman Team Confirms Ground Stations Receiving Data",
-      "summary": "NASA has now confirmed all ground stations supporting the agency’s Nancy Grace Roman Space Telescope are ready to receive the mission’s high volume of data once science operations begin by early 2027. Observing the far reaches of the cosmos wouldn’t be possible without a network of ground stations strategically located around the world serving as […]",
-      "source": "https://science.nasa.gov/blogs/roman/2026/09/25/nasas-roman-team-confirms-ground-stations-receiving-data/",
-      "publishedAt": "2026-09-25T15:17:19.000Z"
+      "title": "NASA Checks Roman Guidance System, Takes First Coronagraph Observation",
+      "summary": "NASA’s Nancy Grace Roman Space Telescope’s fine-guidance system, which allows the observatory to lock very steadily onto its targets during observations, passed a spate of tests from Sept. 15 to 21. Then on Sept. 22, the mission’s Coronagraph Instrument opened its eyes to cosmic light for the very first time. The team assigned a small […]",
+      "source": "https://science.nasa.gov/blogs/roman/2026/09/30/nasa-checks-roman-guidance-system-takes-first-coronagraph-observation/",
+      "publishedAt": "2026-09-30T15:51:03.000Z"
     }
   },
   "milestones": [
@@ -62,7 +62,7 @@
       "id": "mcc2",
       "title": "Mid-course correction #2",
       "timing": "Late September 2026 (plan announced 14 Sep)",
-      "status": "planned",
+      "status": "awaiting_confirmation",
       "description": "NASA rescheduled the second correction for later September following the precise first burn.",
       "source": "https://science.nasa.gov/blogs/roman/2026/09/14/fuel-savings-double-potential-lifetime-for-nasas-roman-mission/",
       "staleAfter": "2026-09-30T23:59:59Z"
