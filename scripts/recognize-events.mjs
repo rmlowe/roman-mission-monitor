@@ -54,8 +54,8 @@ const recognizers = [
     milestone: 'first_look',
     status: 'complete',
     matches: (text) =>
-      /^(?:NASA (?:has )?(?:confirmed|reported|announced) (?:that )?)?(?:Roman['’]s )?first(?:[- ]look)? (?:images|observations) (?:have been|were) (?:successfully )?(?:released|published)\b/i.test(text),
-    title: 'First-look images released',
+      /^(?:NASA (?:has )?(?:confirmed|reported|announced) (?:that )?)?(?:Roman['’]s )?first(?:[- ]look| science) (?:images|observations) (?:have been|were) (?:successfully )?(?:released|published)\b/i.test(text),
+    title: 'First science images released',
   },
   {
     milestone: 'science',
@@ -78,9 +78,19 @@ export function recognize(item) {
   return recognizers
     .filter((rule) => sentences.some(sentence => {
       // "Not required" is a positive assertion for this particular state.
-      const assertion = rule.status === 'not_required'
+      let assertion = rule.status === 'not_required'
         ? sentence.replace(/\bnot (?:required|needed)\b/gi, 'unnecessary')
         : sentence
+      // NASA's 15 September confirmation contains a future capability in a
+      // descriptive relative clause. Remove only that clause's future marker;
+      // keep checking the full sentence for denials and other uncertainty.
+      // Anchoring the affirmative subject prevents conditional/quoted claims.
+      if (rule.milestone === 'wfi_power_on') {
+        assertion = assertion.replace(
+          /^(NASA['’]s Nancy Grace Roman Space Telescope team has successfully activated the Wide Field Instrument, a \d+-megapixel infrared camera that) will allow\b/i,
+          '$1 allows',
+        )
+      }
       return !uncertain.test(assertion) && rule.matches(sentence)
     }))
     .map((rule) => ({
@@ -92,7 +102,7 @@ export function recognize(item) {
       summary: item.title,
       source: item.url,
       sourceType: 'nasa-roman-rss',
-      recognizerVersion: 3,
+      recognizerVersion: 4,
     }))
 }
 
@@ -100,5 +110,6 @@ export function recognize(item) {
 // Preserve seed events and recognitions produced with affirmative assertion rules.
 export function discardLegacyScienceEvents(events) {
   return events.filter(event => !(event.sourceType === 'nasa-roman-rss' &&
-    ['science', 'first_look'].includes(event.milestone) && event.recognizerVersion !== 3))
+    ((event.milestone === 'science' && ![3, 4].includes(event.recognizerVersion)) ||
+      (event.milestone === 'first_look' && event.recognizerVersion !== 4))))
 }

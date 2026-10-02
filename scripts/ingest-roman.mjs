@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { parseCommissioningPage } from './parse-commissioning.mjs'
+import { buildMissionStatus } from './build-mission-status.mjs'
 import { recognize, discardLegacyScienceEvents } from './recognize-events.mjs'
 
 const root = process.cwd()
@@ -51,25 +52,10 @@ function parseRss(xml) {
       title: stripHtml(tag(item, 'title')),
       url: stripHtml(tag(item, 'link')),
       publishedAt: tag(item, 'pubDate') ? new Date(tag(item, 'pubDate')).toISOString() : undefined,
+      summary: stripHtml(description),
       text: stripHtml(`${description} ${encoded}`),
     }
   })
-}
-
-function eventsFor(events, milestone) {
-  return events.filter((event) => event.milestone === milestone)
-}
-
-function latestStateEvent(events, milestone) {
-  return eventsFor(events, milestone).sort(
-    (a, b) => new Date(b.publishedAt ?? b.occurredAt ?? 0) - new Date(a.publishedAt ?? a.occurredAt ?? 0),
-  )[0]
-}
-
-function latestActualEvent(events, milestone) {
-  return eventsFor(events, milestone)
-    .filter((event) => event.occurredAt)
-    .sort((a, b) => new Date(b.occurredAt) - new Date(a.occurredAt))[0]
 }
 
 const mission = await readJson('data/mission.json')
@@ -141,38 +127,6 @@ for (const event of recognizedEvents) {
 
 sourceState.romanBlog.lastSeenItemUrl = items[0].url
 
-const now = Date.now()
-const renderedMilestones = milestones.map((milestone) => {
-  const stateEvent = latestStateEvent(events, milestone.id)
-  const actualEvent = latestActualEvent(events, milestone.id)
-  let status = stateEvent?.status ?? milestone.defaultStatus
-  if (!stateEvent && milestone.staleAfter && now > new Date(milestone.staleAfter).getTime()) {
-    status = 'awaiting_confirmation'
-  }
-  return {
-    id: milestone.id,
-    title: milestone.title,
-    timing: milestone.timing,
-    actualAt: actualEvent?.occurredAt ?? milestone.actualAt,
-    status,
-    description: milestone.description,
-    source: stateEvent?.source ?? milestone.source,
-    ...(milestone.staleAfter ? { staleAfter: milestone.staleAfter } : {}),
-  }
-})
-
-const latest = [...events].sort(
-  (a, b) => new Date(b.publishedAt ?? b.occurredAt ?? 0) - new Date(a.publishedAt ?? a.occurredAt ?? 0),
-)[0]
-
 await writeJson('data/events.json', events)
 await writeJson('data/source-state.json', sourceState)
-await writeJson('src/generated/mission-status.json', {
-  mission: {
-    phase: 'Commissioning',
-    latestHeadline: latest.title,
-    latestSummary: latest.summary,
-    latestSource: latest.source,
-  },
-  milestones: renderedMilestones,
-})
+await writeJson('src/generated/mission-status.json', buildMissionStatus({ milestones, events, items }))

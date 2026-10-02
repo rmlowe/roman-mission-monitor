@@ -47,20 +47,20 @@
   {
     "id": "mcc2",
     "title": "Mid-course correction #2",
-    "timing": "Later this week, if needed",
-    "defaultStatus": "conditional",
-    "staleAfter": "2026-09-07T23:59:59Z",
-    "description": "Second planned trajectory correction; NASA says it will be performed if needed.",
-    "source": "https://science.nasa.gov/blogs/roman/2026/08/31/nasas-roman-completes-first-mid-course-correction-burn/"
+    "timing": "Late September 2026 (plan announced 14 Sep)",
+    "defaultStatus": "planned",
+    "staleAfter": "2026-09-30T23:59:59Z",
+    "description": "NASA rescheduled the second correction for later September following the precise first burn.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/14/fuel-savings-double-potential-lifetime-for-nasas-roman-mission/"
   },
   {
     "id": "wfi_power_on",
     "title": "Wide Field Instrument power-on",
-    "timing": "~3 weeks after launch",
+    "timing": "Activation confirmed 15 Sep 2026",
     "defaultStatus": "planned",
     "staleAfter": "2026-09-24T11:26:00Z",
-    "description": "Roman’s primary science instrument enters its commissioning sequence.",
-    "source": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/"
+    "description": "NASA confirmed activation and initial instrument checks on 15 September 2026.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/15/nasa-activates-romans-primary-instrument-checks-out-coronagraph/"
   },
   {
     "id": "alignment",
@@ -82,11 +82,11 @@
   },
   {
     "id": "first_look",
-    "title": "First-look images",
-    "timing": "Awaiting NASA announcement",
+    "title": "First science images",
+    "timing": "Expected by early 2027",
     "defaultStatus": "planned",
-    "description": "Release of Roman’s first-look images or observations.",
-    "source": "https://science.nasa.gov/mission/roman-space-telescope/"
+    "description": "Release of the first science images after alignment and calibration. NASA already published an out-of-focus engineering test image on 15 September; that does not complete this milestone.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/15/nasa-activates-romans-primary-instrument-checks-out-coronagraph/"
   },
   {
     "id": "science",
