@@ -83,3 +83,12 @@ footer { display: flex; justify-content: space-between; gap: 24px; margin-top: 2
   .timeline-title-row { flex-direction: column; }
   footer { flex-direction: column; }
 }
+
+.footer-meta { min-width: 0; display: grid; gap: 10px; }
+.freshness-details { color: #9aadc0; }
+.freshness-details summary { cursor: pointer; width: fit-content; line-height: 1.6; }
+.freshness-details summary:focus-visible { outline: 2px solid #9bc7ff; outline-offset: 4px; border-radius: 2px; }
+.details-label { color: #9bc7ff; margin-left: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.freshness-explanation { max-width: 560px; }
+.freshness-explanation p { margin: 8px 0 0; color: #9aadc0; overflow-wrap: anywhere; }
+.freshness-warning { margin: 0 0 14px; padding: 12px 16px; border: 1px solid rgba(241,203,117,.4); border-radius: 10px; background: rgba(241,203,117,.07); color: #f1cb75; font-size: .9rem; }
