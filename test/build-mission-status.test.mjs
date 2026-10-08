@@ -4,8 +4,8 @@ import { readFile } from 'node:fs/promises'
 import { buildMissionStatus } from '../scripts/build-mission-status.mjs'
 import { recognize } from '../scripts/recognize-events.mjs'
 
-const milestones = JSON.parse(await readFile(new URL('../data/milestones.json', import.meta.url)))
-const events = JSON.parse(await readFile(new URL('../data/events.json', import.meta.url)))
+// Historical scenarios must remain stable when production ingestion adds events.
+const { milestones, events } = JSON.parse(await readFile(new URL('./fixtures/mission-september-2026.json', import.meta.url)))
 const older = { title: 'Instrument activation', url: 'https://example.test/activation', publishedAt: '2026-09-15T17:59:00Z', summary: 'WFI activation confirmed.' }
 const newer = { title: 'Ground stations ready', url: 'https://example.test/ground-stations', publishedAt: '2026-09-25T15:17:00Z', summary: 'Ground stations are ready for future science operations.' }
 const args = { milestones, events, items: [older, newer], now: Date.parse('2026-09-30T07:00:00Z') }
