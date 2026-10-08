@@ -1,4 +1,6 @@
 import fs from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { recordSuccessfulCheck } from './collection-health.mjs'
 import path from 'node:path'
 import { parseCommissioningPage } from './parse-commissioning.mjs'
 import { buildMissionStatus } from './build-mission-status.mjs'
@@ -130,3 +132,12 @@ sourceState.romanBlog.lastSeenItemUrl = items[0].url
 await writeJson('data/events.json', events)
 await writeJson('data/source-state.json', sourceState)
 await writeJson('src/generated/mission-status.json', buildMissionStatus({ milestones, events, items }))
+
+// Written only after both sources have fetched and parsed successfully.
+const checkedAt = new Date().toISOString()
+const previousHealth = await readJsonIfPresent('data/collection-health.json')
+const health = recordSuccessfulCheck(previousHealth, {
+  romanBlog: { url: mission.blogFeed, contentHash: createHash('sha256').update(JSON.stringify([...items].sort((a, b) => a.url.localeCompare(b.url)))).digest('hex') },
+  romanCommissioning: { url: mission.commissioningPage, contentHash: commissioningSnapshot.source.contentHash },
+}, checkedAt)
+await writeJson('data/collection-health.json', health)

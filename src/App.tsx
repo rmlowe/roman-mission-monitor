@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { mission, milestones } from './mission'
+import collectionHealth from '../data/collection-health.json'
 
 function useMissionElapsed() {
   const [now, setNow] = useState(() => Date.now())
@@ -50,6 +51,9 @@ function publicationDate(value?: string) {
 
 export default function App() {
   const elapsed = useMissionElapsed()
+  const checkedAt = collectionHealth.lastSuccessfulCheckAt as string | null
+  const age = checkedAt ? Date.now() - Date.parse(checkedAt) : NaN
+  const fresh = Number.isFinite(age) && age >= 0 && age <= collectionHealth.staleAfterHours * 3600000
 
   return (
     <main className="page-shell">
@@ -90,6 +94,13 @@ export default function App() {
           <a href={mission.latestSource} target="_blank" rel="noreferrer">NASA update ↗</a>
         </article>
       </section>
+
+      <p role="status">
+        <strong>Source checks: {fresh ? 'Fresh' : checkedAt ? 'Stale' : 'Not yet recorded'}</strong>
+        {checkedAt && <> · Last successful check: {new Date(checkedAt).toLocaleString('en-GB', { timeZone: 'UTC' })} UTC.</>}
+        {' '}Checks run hourly; data is marked stale after {collectionHealth.staleAfterHours} hours.
+        {' '}A successful check does not imply new mission news.
+      </p>
 
       <section className="journey-card">
         <div className="section-heading">

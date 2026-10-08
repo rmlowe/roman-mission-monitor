@@ -63,6 +63,30 @@
     "source": "https://science.nasa.gov/blogs/roman/2026/09/15/nasa-activates-romans-primary-instrument-checks-out-coronagraph/"
   },
   {
+    "id": "ground_stations",
+    "title": "Ground stations validated",
+    "timing": "Tests completed 17 Sep; reported 25 Sep 2026",
+    "defaultStatus": "planned",
+    "description": "All supporting ground stations demonstrated reception of Roman data, including tests at its maximum downlink rate.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/25/nasas-roman-team-confirms-ground-stations-receiving-data/"
+  },
+  {
+    "id": "fine_guidance",
+    "title": "Fine-guidance tests passed",
+    "timing": "15–21 Sep; reported 30 Sep 2026",
+    "defaultStatus": "planned",
+    "description": "Initial fine-guidance stability tests passed. Further tuning and spectral guiding validation remain ahead.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/30/nasa-checks-roman-guidance-system-takes-first-coronagraph-observation/"
+  },
+  {
+    "id": "coronagraph_first_observation",
+    "title": "First Coronagraph observations",
+    "timing": "22 and 27 Sep; reported 30 Sep 2026",
+    "defaultStatus": "planned",
+    "description": "Initial focused-star and subsequent pointing observations succeeded. These are commissioning tests, not completion of observatory alignment or the first science-image release.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/30/nasa-checks-roman-guidance-system-takes-first-coronagraph-observation/"
+  },
+  {
     "id": "alignment",
     "title": "Alignment & focus",
     "timing": "~2 months after launch",

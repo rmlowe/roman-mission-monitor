@@ -37,7 +37,7 @@ export function buildMissionStatus({ milestones, events, items, now = Date.now()
   })
 
   const latest = [...events].sort(
-    (a, b) => new Date(b.publishedAt ?? b.occurredAt ?? 0) - new Date(a.publishedAt ?? a.occurredAt ?? 0),
+    (a, b) => new Date(b.publishedAt ?? b.occurredAt ?? 0) - new Date(a.publishedAt ?? a.occurredAt ?? 0) || Date.parse(b.occurredAt ?? b.occurredOn ?? b.publishedAt) - Date.parse(a.occurredAt ?? a.occurredOn ?? a.publishedAt) || b.id.localeCompare(a.id),
   )[0]
 
   const latestArticle = [...items].sort(
@@ -45,7 +45,8 @@ export function buildMissionStatus({ milestones, events, items, now = Date.now()
   )[0]
   return {
     mission: {
-      phase: 'Commissioning',
+      phase: latestStateEvent(events, 'science')?.status === 'complete'
+        ? 'Science operations' : 'Commissioning',
       latestHeadline: latest.title,
       latestSummary: latest.summary,
       latestSource: latest.source,

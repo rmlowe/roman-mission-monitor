@@ -74,5 +74,38 @@
     "source": "https://science.nasa.gov/blogs/roman/2026/09/15/nasa-activates-romans-primary-instrument-checks-out-coronagraph/",
     "sourceType": "nasa-roman-rss",
     "recognizerVersion": 4
+  },
+  {
+    "id": "verified:ground_stations",
+    "milestone": "ground_stations",
+    "status": "complete",
+    "publishedAt": "2026-09-25T15:17:00Z",
+    "title": "Ground stations validated",
+    "summary": "All supporting ground stations demonstrated reception of Roman data, including tests at its maximum downlink rate.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/25/nasas-roman-team-confirms-ground-stations-receiving-data/",
+    "sourceType": "verified-nasa-report",
+    "occurredOn": "2026-09-17"
+  },
+  {
+    "id": "verified:fine_guidance",
+    "milestone": "fine_guidance",
+    "status": "complete",
+    "publishedAt": "2026-09-30T15:51:03Z",
+    "title": "Fine-guidance tests passed",
+    "summary": "Initial fine-guidance stability tests passed. Further tuning and spectral guiding validation remain ahead.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/30/nasa-checks-roman-guidance-system-takes-first-coronagraph-observation/",
+    "sourceType": "verified-nasa-report",
+    "occurredOn": "2026-09-21"
+  },
+  {
+    "id": "verified:coronagraph_first_observation",
+    "milestone": "coronagraph_first_observation",
+    "status": "complete",
+    "publishedAt": "2026-09-30T15:51:03Z",
+    "title": "First Coronagraph observations",
+    "summary": "Initial focused-star and subsequent pointing observations succeeded. These are commissioning tests, not completion of observatory alignment or the first science-image release.",
+    "source": "https://science.nasa.gov/blogs/roman/2026/09/30/nasa-checks-roman-guidance-system-takes-first-coronagraph-observation/",
+    "sourceType": "verified-nasa-report",
+    "occurredOn": "2026-09-27"
   }
 ]

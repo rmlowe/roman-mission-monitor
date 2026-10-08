@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Regression tests
+        run: npm test
+
       - name: Ingest official Roman updates
         run: node scripts/ingest-roman.mjs
 
@@ -38,18 +41,21 @@ jobs:
         id: changes
         shell: bash
         run: |
-          if [[ -z "$(git status --porcelain -- data/events.json data/source-state.json data/observations/commissioning.json src/generated/mission-status.json)" ]]; then
+          if [[ -z "$(git status --porcelain -- data/collection-health.json data/events.json data/source-state.json data/observations/commissioning.json src/generated/mission-status.json)" ]]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Validate build
+        run: npm run build
 
       - name: Commit mission status
         if: steps.changes.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/events.json data/source-state.json data/observations/commissioning.json src/generated/mission-status.json
+          git add data/collection-health.json data/events.json data/source-state.json data/observations/commissioning.json src/generated/mission-status.json
           git commit -m "Update Roman mission status"
           git push
 
@@ -62,10 +68,6 @@ jobs:
           else
             echo "deploy=false" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Build
-        if: steps.deploy.outputs.deploy == 'true'
-        run: npm run build
 
       - name: Configure Pages
         if: steps.deploy.outputs.deploy == 'true'
