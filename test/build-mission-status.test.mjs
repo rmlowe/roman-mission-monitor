@@ -4,8 +4,8 @@ import { readFile } from 'node:fs/promises'
 import { buildMissionStatus } from '../scripts/build-mission-status.mjs'
 import { recognize } from '../scripts/recognize-events.mjs'
 
-const milestones = JSON.parse(await readFile(new URL('../data/milestones.json', import.meta.url)))
-const events = JSON.parse(await readFile(new URL('../data/events.json', import.meta.url)))
+// Historical scenarios must remain stable when production ingestion adds events.
+const { milestones, events } = JSON.parse(await readFile(new URL('./fixtures/mission-september-2026.json', import.meta.url)))
 const older = { title: 'Instrument activation', url: 'https://example.test/activation', publishedAt: '2026-09-15T17:59:00Z', summary: 'WFI activation confirmed.' }
 const newer = { title: 'Ground stations ready', url: 'https://example.test/ground-stations', publishedAt: '2026-09-25T15:17:00Z', summary: 'Ground stations are ready for future science operations.' }
 const args = { milestones, events, items: [older, newer], now: Date.parse('2026-09-30T07:00:00Z') }
@@ -27,7 +27,7 @@ test('NASA confirmation completes WFI without inventing an occurrence time', () 
   assert.equal(wfi.status, 'complete')
   assert.equal(wfi.source, older.url)
   assert.equal(wfi.actualAt, undefined)
-  assert.equal(result.mission.latestPublishedAt, older.publishedAt)
+  assert.equal(confirmed[0].publishedAt, older.publishedAt)
 })
 
 test('revised MCC2 plan expires without implying completion or cancellation', () => {
@@ -49,4 +49,26 @@ test('news excerpt omits RSS attribution boilerplate and falls back to title', (
   const result = buildMissionStatus({ ...args, items: [{ ...newer, summary: newer.summary + ' The post Ground stations ready appeared first on NASA Science .' }] })
   assert.equal(result.mission.latestArticle.summary, newer.summary)
   assert.equal(buildMissionStatus({ ...args, items: [{ ...newer, summary: '' }] }).mission.latestArticle.summary, newer.title)
+})
+
+test('verified commissioning observations appear without completing science or alignment', () => {
+  const result = buildMissionStatus(args)
+  for (const id of ['fine_guidance', 'coronagraph_first_observation', 'ground_stations']) {
+    const milestone = result.milestones.find(m => m.id === id)
+    assert.equal(milestone.status, 'complete')
+    assert.equal(milestone.actualAt, undefined, 'day-level reports must not invent exact timestamps')
+  }
+  assert.equal(result.mission.latestPublishedAt, '2026-09-30T15:51:03Z')
+  assert.equal(result.mission.phase, 'Commissioning')
+  assert.equal(result.milestones.find(m => m.id === 'alignment').status, 'planned')
+  assert.equal(result.mission.latestHeadline, buildMissionStatus({ ...args, events: [...events].reverse() }).mission.latestHeadline)
+})
+
+test('only a confirmed science event changes phase, never elapsed time or first images', () => {
+  const future = { ...args, now: Date.parse('2028-01-01T00:00:00Z') }
+  assert.equal(buildMissionStatus(future).mission.phase, 'Commissioning')
+  const event = { id: 'science-test', milestone: 'science', status: 'complete', publishedAt: '2027-01-02T00:00:00Z' }
+  assert.equal(buildMissionStatus({ ...future, events: [...events, { ...event, milestone: 'first_look' }] }).mission.phase, 'Commissioning')
+  assert.equal(buildMissionStatus({ ...future, events: [...events, event] }).mission.phase, 'Science operations')
+  assert.equal(buildMissionStatus({ ...future, events: [...events, event, { ...event, id: 'retraction', status: 'awaiting_confirmation', publishedAt: '2027-01-03T00:00:00Z' }] }).mission.phase, 'Commissioning')
 })
