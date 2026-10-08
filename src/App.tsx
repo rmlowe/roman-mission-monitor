@@ -53,6 +53,9 @@ export default function App() {
   const elapsed = useMissionElapsed()
   const checkedAt = collectionHealth.lastSuccessfulCheckAt as string | null
   const age = checkedAt ? Date.now() - Date.parse(checkedAt) : NaN
+  const validCheck = Number.isFinite(age) && age >= 0
+  const minutes = Math.floor(age / 60000)
+  const checkedAgo = minutes < 1 ? 'just now' : minutes < 60 ? `${minutes} minute${minutes === 1 ? '' : 's'} ago` : minutes < 1440 ? `${Math.floor(minutes / 60)} hour${Math.floor(minutes / 60) === 1 ? '' : 's'} ago` : `${Math.floor(minutes / 1440)} day${Math.floor(minutes / 1440) === 1 ? '' : 's'} ago`
   const fresh = Number.isFinite(age) && age >= 0 && age <= collectionHealth.staleAfterHours * 3600000
 
   return (
@@ -95,12 +98,13 @@ export default function App() {
         </article>
       </section>
 
-      <p role="status">
-        <strong>Source checks: {fresh ? 'Fresh' : checkedAt ? 'Stale' : 'Not yet recorded'}</strong>
-        {checkedAt && <> · Last successful check: {new Date(checkedAt).toLocaleString('en-GB', { timeZone: 'UTC' })} UTC.</>}
-        {' '}Checks run hourly; data is marked stale after {collectionHealth.staleAfterHours} hours.
-        {' '}A successful check does not imply new mission news.
-      </p>
+      <div role="status" aria-atomic="true">
+        {!fresh && (
+          <p className="freshness-warning">
+            {validCheck ? 'Source checks are overdue; information may be outdated.' : 'Source freshness is unavailable; information may be outdated.'}
+          </p>
+        )}
+      </div>
 
       <section className="journey-card">
         <div className="section-heading">
@@ -177,7 +181,19 @@ export default function App() {
       </section>
 
       <footer>
-        <span>Unofficial project using public NASA mission information.</span>
+        <div className="footer-meta">
+          <details className="freshness-details">
+            <summary>
+              <span>{validCheck ? `Sources checked ${checkedAgo}` : 'Source check time unavailable'}</span>
+              <span className="details-label">Details</span>
+            </summary>
+            <div className="freshness-explanation">
+              {validCheck && <p>Last successful check: <time dateTime={checkedAt!}>{new Date(checkedAt!).toLocaleString('en-GB', { timeZone: 'UTC' })} UTC</time>.</p>}
+              <p>Checks run hourly. Data is marked stale after {collectionHealth.staleAfterHours} hours. A successful check does not imply new mission news.</p>
+            </div>
+          </details>
+          <span>Unofficial project using public NASA mission information.</span>
+        </div>
         <a href="https://github.com/rmlowe/roman-mission-monitor" target="_blank" rel="noreferrer">Source on GitHub ↗</a>
       </footer>
     </main>
