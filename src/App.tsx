@@ -98,11 +98,13 @@ export default function App() {
         </article>
       </section>
 
-      {!fresh && (
-        <p className="freshness-warning" role="status">
-          {validCheck ? 'Source checks are overdue; information may be outdated.' : 'Source freshness is unavailable; information may be outdated.'}
-        </p>
-      )}
+      <div role="status" aria-atomic="true">
+        {!fresh && (
+          <p className="freshness-warning">
+            {validCheck ? 'Source checks are overdue; information may be outdated.' : 'Source freshness is unavailable; information may be outdated.'}
+          </p>
+        )}
+      </div>
 
       <section className="journey-card">
         <div className="section-heading">
