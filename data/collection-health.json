@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "lastSuccessfulCheckAt": "2026-10-09T11:28:04.293Z",
+  "lastSuccessfulCheckAt": "2026-10-09T12:40:49.966Z",
   "staleAfterHours": 3,
   "sources": {
     "romanBlog": {
       "url": "https://science.nasa.gov/blogs/roman/feed/",
       "contentHash": "614f699285ec3de41002100ec3a3688b232ea489165ab03f59f9e2f4399d8127",
-      "lastSuccessfulCheckAt": "2026-10-09T11:28:04.293Z",
+      "lastSuccessfulCheckAt": "2026-10-09T12:40:49.966Z",
       "firstObservedAt": "2026-10-08T18:36:45.552Z",
       "lastContentChangeAt": null
     },
     "romanCommissioning": {
       "url": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/",
-      "contentHash": "sha256:0d81e27c2eec2a9fb0fcdea035c9db5af4315fd3c5fea02b178a41d6e357a0f1",
-      "lastSuccessfulCheckAt": "2026-10-09T11:28:04.293Z",
+      "contentHash": "sha256:fdd995da715c1040443c102555d21212f0347915c7a8a12acea485fa3bb76fb4",
+      "lastSuccessfulCheckAt": "2026-10-09T12:40:49.966Z",
       "firstObservedAt": "2026-10-08T18:36:45.552Z",
-      "lastContentChangeAt": null
+      "lastContentChangeAt": "2026-10-09T12:40:49.966Z"
     }
   }
 }
