@@ -25,3 +25,17 @@ in GitHub Actions and leave the previous site's timestamp to age.
 
 Run `npm test` and `npm run build` locally. `node scripts/ingest-roman.mjs` performs
 live reads and regenerates tracked data. MCP hosting is outside this change.
+
+## Published collection health
+
+Each build copies its collection snapshot to `health.json` beside `index.html`.
+The public endpoint is https://rmlowe.github.io/roman-mission-monitor/health.json.
+It uses the existing `schemaVersion: 1` collection-health format, including per-source successful-check timestamps and the three-hour staleness threshold.
+This describes source collection, not the age or scientific accuracy of mission news.
+Because it ships in the same Pages artifact as the site, a failed deployment leaves both on the previous snapshot. Repository freshness alone does not prove published freshness.
+
+After building, verify with:
+
+```sh
+node --input-type=module -e "import {readFileSync} from 'node:fs'; import assert from 'node:assert/strict'; assert.deepEqual(JSON.parse(readFileSync('dist/health.json')), JSON.parse(readFileSync('data/collection-health.json')));"
+```
