@@ -104,7 +104,7 @@
       "id": "alignment",
       "title": "Alignment & focus",
       "timing": "~2 months after launch",
-      "status": "planned",
+      "status": "awaiting_confirmation",
       "description": "Optical alignment, focusing, calibration, and observatory checkout continue.",
       "source": "https://science.nasa.gov/missions/roman-space-telescope/roman-commissioning/",
       "staleAfter": "2026-11-12T11:26:00Z"
